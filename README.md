@@ -40,6 +40,16 @@ Just start a fresh dev environment in Gitpod.
 
 [Gitpod](https://www.gitpod.io) is a one-click online IDE for GitHub. It is based on [Theia IDE framework](http://www.theia-ide.org) and make use of Monaco and the language server protocol by means of monaco-languageclient.
 
+### Integrating with Python Language Server
+1. `git clone https://github.com/rissem/python-jsonrpc-server`
+1. `pip install python-lsp-server`
+1. `cd python-jsonrpc-server/examples`
+1. `python langserver_ext.py`
+1. `yarn`
+1. `yarn prepare`
+1. `yarn start`
+1. Try out example editor at http://localhost:3200.
+
 ## Examples
 
 There are two different examples that demonstrate how the `monaco-languageclient` can be used. The Node.js example uses Express and WebSockets to enable communication between the language server process and the web application. The browser example shows how a language service written in JavaScript can be used in a Monaco Editor contained in a simple HTML page.
