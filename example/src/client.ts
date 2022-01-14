@@ -24,15 +24,13 @@ const ReconnectingWebSocket = require("reconnecting-websocket");
 // });
 
 // create Monaco editor
-const value = `{
-    "$schema": "http://json.schemastore.org/coffeelint",
-    "line_endings": "unix"
-}`;
+const value = `if (True):
+    print("Hello World")`;
 monaco.editor.create(document.getElementById("container")!, {
   model: monaco.editor.createModel(
     value,
-    "json",
-    monaco.Uri.parse("inmemory://model.json")
+    "python",
+    monaco.Uri.parse("/Users/mike/pls/python-jsonrpc-server/examples/model.py")
   ),
   glyphMargin: true,
   lightbulb: {
@@ -41,7 +39,9 @@ monaco.editor.create(document.getElementById("container")!, {
 });
 
 // install Monaco language client services
-MonacoServices.install(monaco);
+MonacoServices.install(monaco, {
+  rootUri: "/Users/mike/pls/python-jsonrpc-server/examples",
+});
 
 // create the web socket
 const url = createUrl("/sampleServer");
@@ -64,7 +64,7 @@ function createLanguageClient(
     name: "Sample Language Client",
     clientOptions: {
       // use a language id as a document selector
-      documentSelector: ["json"],
+      documentSelector: ["python"],
       // disable the default error handler
       errorHandler: {
         error: () => ErrorAction.Continue,
@@ -83,10 +83,8 @@ function createLanguageClient(
 }
 
 function createUrl(path: string): string {
-  const protocol = location.protocol === "https:" ? "wss" : "ws";
-  return normalizeUrl(
-    `${protocol}://${location.host}${location.pathname}${path}`
-  );
+  //   const protocol = location.protocol === "https:" ? "wss" : "ws";
+  return normalizeUrl(`ws://localhost:4000/python/`);
 }
 
 function createWebSocket(url: string): WebSocket {
